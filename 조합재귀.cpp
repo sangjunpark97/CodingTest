@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-1
+
 using namespace std;
 
 vector<int> vctA;
