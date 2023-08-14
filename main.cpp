@@ -2,37 +2,18 @@
 
 using namespace std;
 
-vector<int> vctReturn;
-vector<int> vctInput;
-int a = 0;
-
-void RecursiveCombi(int n, int r, int start)
-{
-    if(!a && vctReturn.size() == 7 && accumulate(vctReturn.begin(), vctReturn.end(), 0) == 100)
-    {
-        sort(vctReturn.begin(), vctReturn.end());
-        a = 1;
-        for(int i : vctReturn)
-            cout << i << "\n";
-        
-        return;
-    }
-
-    for(int i = start + 1; i < r; ++i)
-    {
-        vctReturn.push_back(vctInput[i]);
-        RecursiveCombi(n, r, i);
-        vctReturn.pop_back();
-    }
-}
+vector<int> vctReturn{0,1,2,3,4};
+vector<int> vctI{0,0,1,1,1};
 
 int main()
 {
-    for(int i = 0; i < 9; i++)
+    do
     {
-        int i32Input;
-        cin >> i32Input;
-        vctInput.push_back(i32Input);
-    }
-    RecursiveCombi(7, 9, -1);
+        for(int i : vctI)
+        {
+            cout << i << " ";
+        }
+        cout << "\n";
+        
+    } while (next_permutation(vctI.begin(),vctI.end()));
 }
