@@ -21,30 +21,25 @@ int main()
     {
         int sum = 0;
         
-        for(int i = 0; i<vctFlag.size(); ++i)
+        for(int i = 0; i<(int)vctFlag.size(); ++i)
         {
             if(vctFlag[i])
             {
                 sum += vctInput[i];
+                vctReturn.push_back(vctInput[i]);
             }
         }
 
         if(sum == 100)
-            {
-                for(int i = 0; i < vctFlag.size(); ++i)
-                {
-                    if(vctFlag[i])
-                    {
-                        vctReturn.push_back(vctInput[i]);
-                    }
-                }
-                
-                sort(vctReturn.begin(), vctReturn.end());
+        {   
+            sort(vctReturn.begin(), vctReturn.end());
 
-                for(int i : vctReturn)
-                    cout << i << "\n";
+            for(int i : vctReturn)
+                cout << i << "\n";
 
-                break;
-            }
+            break;
+        }
+
+        vctReturn.clear();
     } while (next_permutation(vctFlag.begin(), vctFlag.end()));
 }
