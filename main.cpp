@@ -2,36 +2,37 @@
 
 using namespace std;
 
-vector<int> vctTmp;
+vector<int> vctReturn;
+vector<int> vctInput;
+int a = 0;
 
-void Combi(int i32Now, int i32Max, int i32Size, vector<int> vctI32Res)
+void RecursiveCombi(int n, int r, int start)
 {
-    if(i32Max == vctI32Res.size())
+    if(!a && vctReturn.size() == 7 && accumulate(vctReturn.begin(), vctReturn.end(), 0) == 100)
     {
-        for(int i32I = 0; i32I < i32Max; ++i32I)
-            cout << vctI32Res[i32I] << " ";
+        sort(vctReturn.begin(), vctReturn.end());
+        a = 1;
+        for(int i : vctReturn)
+            cout << i << "\n";
         
-        cout << "\n";
-
         return;
     }
 
-    for(int i32I = i32Now + 1; i32I < i32Size; ++i32I)
+    for(int i = start + 1; i < r; ++i)
     {
-        vctI32Res.push_back(i32I);
-        Combi(i32I, i32Max, i32Size, vctI32Res);
-        vctI32Res.pop_back();
+        vctReturn.push_back(vctInput[i]);
+        RecursiveCombi(n, r, i);
+        vctReturn.pop_back();
     }
 }
 
 int main()
 {
-    vctTmp.push_back(0);
-    vctTmp.push_back(1);
-    vctTmp.push_back(2);
-    vctTmp.push_back(3);
-
-    vector<int> vctI32Res;
-
-    Combi(-1, 3, 5, vctI32Res);
+    for(int i = 0; i < 9; i++)
+    {
+        int i32Input;
+        cin >> i32Input;
+        vctInput.push_back(i32Input);
+    }
+    RecursiveCombi(7, 9, -1);
 }
