@@ -8,6 +8,20 @@
         "iostream": "cpp",
         "ostream": "cpp",
         "queue": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "cstddef": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "ios": "cpp",
+        "stack": "cpp",
+        "random": "cpp",
+        "algorithm": "cpp"
     }
 }
