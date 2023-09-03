@@ -1,63 +1,69 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct A
+char mp[20][20];
+int visited[20][20];
+int score[20][20];
+int max0;
+vector<char> vctChar;
+int N, M;
+int dx[4] = {0, 0, -1, 1};
+int dy[4] = {-1, 1, 0, 0};
+int ret = 0;
+
+void DFS(int y, int x, string vct)
 {
-   int a, b, c;
-};
+    if(ret < vct.length())
+        ret = vct.length();
+    
+    if(ret == max0)
+        return;
 
-int a[3];
-int visited[100][100][100];
-int mutal[6][3] = {
-	{9, 3, 1}, 
-	{9, 1, 3}, 
-	{3, 1, 9}, 
-	{3, 9, 1}, 
-	{1, 3, 9}, 
-	{1, 9, 3}
-};
+    for(int i = 0; i< 4; i++)
+    {
+        int ny = y + dy[i];
+        int nx = x + dx[i];
 
-queue<A> que;
-int m = 999999;
-
-void BFS()
-{
-   que.push({a[0], a[1], a[2]});
-   visited[a[0]][a[1]][a[2]] = 0;
-
-   while(que.size())
-   {
-      int a = que.front().a;
-      int b = que.front().b;
-      int c = que.front().c;
-
-      for(int i = 0; i < 6; i++)
-      {
-         int na = max(0, a - mutal[i][0]);
-         int nb = max(0, b - mutal[i][1]);
-         int nc = max(0, c - mutal[i][2]);
-
-         if(visited[na][nb][nc] != 0 && visited[na][nb][nc] <= visited[a][b][c] + 1)
+        if(ny < 0 || nx < 0 || ny >= N || nx >= M || visited[ny][nx])
             continue;
-         
-         visited[na][nb][nc] = visited[a][b][c] + 1;
-         que.push({na,nb,nc});
-      }
 
-      que.pop();
-   }
+        if(vct.find(mp[ny][nx]) == string::npos)
+        {
+            visited[ny][nx] = 1;
+            vct.push_back(mp[ny][nx]);
+            DFS(ny,nx,vct);
+            vct.pop_back();
+            visited[ny][nx] = 0;
+        }
+    }
 }
 
 int main()
 {
-   int N;
+    cin >> N >> M;
+    string sA;
 
-   cin >> N;
+    for(int y = 0; y < N; ++y)
+    {
+        string s;
 
-   for(int i = 0; i < N; ++i)
-      cin >> a[i];
-   
-   BFS();
+        cin >> s;
 
-   cout << visited[0][0][0];
+        for(int x = 0; x < M; ++x)
+        {
+            mp[y][x] = s[x];
+            
+            if(sA.find(mp[y][x]) == string::npos)
+                sA.push_back(s[x]);
+        }
+    }
+
+    max0 = sA.length();
+    string vct;
+
+    vct.push_back(mp[0][0]);
+
+    DFS(0, 0, vct);
+
+    cout << ret;
 }
