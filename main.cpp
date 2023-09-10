@@ -1,37 +1,52 @@
-    #include <bits/stdc++.h>
+#include <bits/stdc++.h>
 
-    using namespace std;
+using namespace std;
 
-    int T,W;
-    int dp[1004][2][34];
-    int table[1004];
+int mp[10001];
 
-    int go(int idx, int tree, int cnt)
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL); 
+
+    int N;
+
+    cin >> N;
+
+    vector<pair<int, int>> vctP;
+
+    for(int i = 0; i < N; i++)
     {
-        if(idx == T)
-            return 0;
-        
-        if(cnt > W)
-            return -1e9;
+        int a, b;
 
-        int &ret = dp[idx][tree][cnt];
+        cin>> a >> b;
 
-        if(~ret)
-            return ret;
-        
-        return ret = max(go(idx + 1, tree ^ 1, cnt + 1), go(idx + 1, tree, cnt)) + (tree == (table[idx] - 1));
+        vctP.push_back(pair<int, int>(a, b));
+    }
+    
+    sort(vctP.begin(), vctP.end());
+    reverse(vctP.begin(),vctP.end());
+
+    int V = vctP[0].first;
+    int T = vctP[0].second;
+    int ret = 0;
+
+    for(int i = 0; i < N; i++)
+    {
+        V = vctP[i].first;
+        T = vctP[i].second;
+
+        while(mp[T] && T!=0)T--;
+
+        if(T != 0)
+            mp[T] = V;
     }
 
-    int main()
+    for(int i = 1; i <= 10000; i++)
     {
-        cin >> T >> W;
-
-        for(int i =0; i < T; i++)
-            cin >> table[i];
-
-        memset(dp, -1, sizeof(dp));
-
-        cout << max(go(0, 0, 0),go(0,1,1));
-
-        return 0;
+        ret+=mp[i];
     }
+
+    cout << ret;
+}
