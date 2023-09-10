@@ -1,61 +1,38 @@
-#include <bits/stdc++.h>
-using namespace std;
+    #include <bits/stdc++.h>
 
-int main()
-{
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    int N;
+    using namespace std;
 
-    cin >> N;
+    int T,W;
+    int dp[1004][2][34];
+    int table[1004];
 
-    int num = 0;
-
-    for(int j = 0; j < N; j++)
+    int go(int idx, int tree, int cnt)
     {
-        string s;
+        if(idx == T)
+            return 0;
+        
+        if(cnt > W)
+            return -1e9;
 
-        cin >> s;
+        int &ret = dp[idx][tree][cnt];
 
-            if(s == "add")
-            {
-                int i;
-
-                cin >> i;
-
-                num |= (1 << i);
-            }
-            if(s == "check")
-            {
-                int i;
-
-                cin >> i;
-
-                cout << ((num & (1<<i)) > 0) << "\n";
-            }
-            if(s == "remove")
-            {
-                int i;
-
-                cin >> i;
-
-                num &= ~(1 << i);
-            }
-            if(s == "toggle")
-            {
-                int i;
-
-                cin >> i;
-
-                num ^= (1 << i);
-            }
-            if(s == "all")
-            {
-                num = 0x1fffff;
-            }
-            if(s == "empty")
-            {
-                num = 0;
-            }
+        if(~ret)
+            return ret;
+        
+        return ret = max(go(idx + 1, tree ^ 1, cnt + 1), go(idx + 1, tree, cnt)) + (tree == (table[idx] - 1));
     }
-}
+
+    int main()
+    {
+        cin >> T >> W;
+
+        for(int i =0; i < T; i++)
+            cin >> table[i];
+
+        memset(dp, -1, sizeof(dp));
+
+        cout << max(go(0, 0, 0),go(0,1,1));
+
+        return 0;
+    }
+
