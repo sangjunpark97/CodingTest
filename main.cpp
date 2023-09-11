@@ -10,43 +10,72 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL); 
 
-    int N;
+    string s;
 
-    cin >> N;
-
-    vector<pair<int, int>> vctP;
-
-    for(int i = 0; i < N; i++)
-    {
-        int a, b;
-
-        cin>> a >> b;
-
-        vctP.push_back(pair<int, int>(a, b));
-    }
+    cin >> s;
     
-    sort(vctP.begin(), vctP.end());
-    reverse(vctP.begin(),vctP.end());
+    string n;
 
-    int V = vctP[0].first;
-    int T = vctP[0].second;
-    int ret = 0;
+    cin >> n;
 
-    for(int i = 0; i < N; i++)
+    string f;
+
+    int i = 0;
+    int cnt = 0;
+
+    string tmp;
+
+    while(i != s.length())
     {
-        V = vctP[i].first;
-        T = vctP[i].second;
+        if(cnt < n.size() && s[i] == n[cnt])
+        {
+            tmp.push_back(n[cnt]);
+            cnt++;
+        }
+        else if(cnt == n.size())
+        {
+            tmp.clear();
+            cnt = 0;
 
-        while(mp[T] && T!=0)T--;
+            if(s[i] == n[cnt])
+            {
+                tmp.push_back(n[cnt]);
+                cnt++;
+            }
+            else
+            {
+                f.push_back(s[i]);
+            }
+        }
+        else
+        {
+            f+=tmp;
+            tmp.clear();
+            cnt = 0;
 
-        if(T != 0)
-            mp[T] = V;
+            if(s[i] == n[cnt])
+            {
+                tmp.push_back(n[cnt]);
+                cnt++;
+            }
+            else
+            {
+                f.push_back(s[i]);
+            }
+        }
+
+        i++;
     }
 
-    for(int i = 1; i <= 10000; i++)
+    long long pos;
+
+    while((pos = f.find(n)) != string::npos)
     {
-        ret+=mp[i];
+        f.erase(f.begin() + pos, f.begin() + pos + n.length());
     }
 
-    cout << ret;
+    if(f.length())
+        cout << f;
+    else
+        cout << "FRULA";
 }
