@@ -1,79 +1,52 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-
-int visited[101];
+vector<pair<int, int>> v;
 
 int main()
 {
-    int N, K;
-    int ret = 0;
+    int N, L;
 
-    cin >> K >> N;
-
-    vector<int> now;
-    vector<int> all;
-
-    for(int i = 0; i < N; i++)
+    cin >> N >> L;
+    
+    for(int i = 0; i< N; i++)
     {
-        int n;
-        
-        cin >> n;
+        int a , b;
 
-        all.push_back(n);
+        cin>> a >> b;
+
+        v.push_back(pair<int,int>(a,b));
     }
 
-    for(int i = 0; i < N; i++)
+    sort(v.begin(), v.end());
+
+    int start = 2000000000;
+    int end = 2000000000;
+
+    int ret = 0;
+
+    while(v.size())
     {
-        if(now.size() < K)
+        int r = v.back().second - 1;
+        int l = v.back().first;
+        
+        if(end <= l)
         {
-            if(!visited[all[i]])
-            {
-                now.push_back(all[i]);
-                visited[all[i]] = 1;
-            }
+            v.pop_back();
+            continue;
         }
-        else
-        {
-            if(visited[all[i]] == 0)
-            {
-                int swapN = -1;
-                int cnt = -1;
 
-                for(int j = 0; j < now.size(); j++)
-                {
-                    bool bCheck = false;
+        if(start > r)
+            start = r;
+            
+        end = start - L + 1;
 
-                    for(int k = i + 1; k < all.size(); k++)
-                    {
-                        if(now[j] == all[k])
-                        {
-                            bCheck = true;
+        if(end <= l)
+            v.pop_back();
 
-                            if(cnt < k)
-                            {
-                                cnt = k;
-                                swapN = j;
-                            }
-                            break;
-                        }
-                    }
-
-                    if(bCheck == false)
-                    {
-                        swapN = j;
-                        break;
-                    }
-                }
-
-                ret++;
-
-                visited[now[swapN]] = 0;
-                visited[all[i]] = 1;
-                
-                now[swapN] = all[i];
-            }
-        }
+        start = end - 1;
+        
+        ret++;
     }
 
     cout << ret;
