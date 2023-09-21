@@ -2,427 +2,136 @@
 
 using namespace std;
 
-int mp[10][10];
-int number[8];
-pair<int,int> pos[8];
-int num;
-int N, M;
-int ret = 987654321;
-
-
-void go(int cnt)
-{
-    if(cnt == num)
-    {
-        int sum = 0;
-
-        for(int y = 0 ; y < N; y++)
-        {
-            for(int x = 0; x< M; x++)
-            {
-                if(mp[y][x] == 0)
-                    sum++;
-            }
-        }
-
-        ret = min(ret, sum);
-    }
-    else
-    {
-        int k = number[cnt];
-        int tmp[10][10];
-
-        memcpy(tmp, mp, sizeof(mp));
-
-        if(k == 1)
-        {
-            //1
-            for(int x = pos[cnt].second + 1; x < M; x++)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            go(cnt + 1);
-
-            memcpy(mp, tmp, sizeof(tmp));
-            //2
-            for(int y = pos[cnt].first + 1; y < N; y++)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            go(cnt + 1);
-            memcpy(mp, tmp, sizeof(tmp));
-            //4
-
-            for(int x = pos[cnt].second - 1; x >= 0; x--)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-
-            //8
-            for(int y = pos[cnt].first - 1; y >= 0; y--)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-        }
-        else if(k == 2)
-        {
-            for(int x = pos[cnt].second + 1; x < M; x++)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-
-            for(int x = pos[cnt].second - 1; x >= 0; x--)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            go(cnt + 1);
-
-            memcpy(mp, tmp, sizeof(tmp));
-
-
-            for(int y = pos[cnt].first - 1; y >= 0; y--)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            for(int y = pos[cnt].first + 1; y < N; y++)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-        }
-        else if(k == 3)
-        {
-
-            //1
-            for(int x = pos[cnt].second + 1; x < M; x++)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-            
-            //2
-            for(int y = pos[cnt].first + 1; y < N; y++)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-
-            //2
-            for(int y = pos[cnt].first + 1; y < N; y++)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            //4
-
-            for(int x = pos[cnt].second - 1; x >= 0; x--)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-
-
-            //4
-
-            for(int x = pos[cnt].second - 1; x >= 0; x--)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            //8
-            for(int y = pos[cnt].first - 1; y >= 0; y--)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-
-
-            //1
-            for(int x = pos[cnt].second + 1; x < M; x++)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            //8
-            for(int y = pos[cnt].first - 1; y >= 0; y--)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-        }
-        else if(k == 4)
-        {
-            //2
-            for(int y = pos[cnt].first + 1; y < N; y++)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            //4
-
-            for(int x = pos[cnt].second - 1; x >= 0; x--)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            //8
-            for(int y = pos[cnt].first - 1; y >= 0; y--)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-
-            //1
-            for(int x = pos[cnt].second + 1; x < M; x++)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            //4
-
-            for(int x = pos[cnt].second - 1; x >= 0; x--)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            //8
-            for(int y = pos[cnt].first - 1; y >= 0; y--)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-
-
-            //1
-            for(int x = pos[cnt].second + 1; x < M; x++)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            //2
-            for(int y = pos[cnt].first + 1; y < N; y++)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            //8
-            for(int y = pos[cnt].first - 1; y >= 0; y--)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-
-
-            //1
-            for(int x = pos[cnt].second + 1; x < M; x++)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            //2
-            for(int y = pos[cnt].first + 1; y < N; y++)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            //4
-
-            for(int x = pos[cnt].second - 1; x >= 0; x--)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-        }
-        else if(k == 5)
-        {
-            //1
-            for(int x = pos[cnt].second + 1; x < M; x++)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-            
-            //2
-            for(int y = pos[cnt].first + 1; y < N; y++)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            //4
-
-            for(int x = pos[cnt].second - 1; x >= 0; x--)
-            {
-                if(mp[pos[cnt].first][x] == 6)
-                    break;
-                else if(mp[pos[cnt].first][x] == 0)
-                    mp[pos[cnt].first][x] = -1;
-            }
-
-            //8
-            for(int y = pos[cnt].first - 1; y >= 0; y--)
-            {
-                if(mp[y][pos[cnt].second] == 6)
-                    break;
-                else if(mp[y][pos[cnt].second] == 0)
-                    mp[y][pos[cnt].second] = -1;
-            }
-
-            go(cnt + 1);
-            
-            memcpy(mp, tmp, sizeof(tmp));
-        }
-    }
-}
+int mp[51][51];
+int temp[51][51];
+int dy[4] = {0, 0, -1, 1};
+int dx[4] = {-1, 1, 0, 0};
 
 int main()
 {
-    cin >> N >> M;
+    int N, M, T;
 
-    for(int y = 0 ; y < N; y++)
+    cin >> N >> M >> T;
+
+    for(int i = 1; i <= N; i++)
     {
-        for(int x = 0; x< M; x++)
+        for(int j = 0; j < M; j++)
         {
-            cin >> mp[y][x];
-
-            if(mp[y][x] != 0 && mp[y][x] != 6)
-            {
-                number[num] = mp[y][x];
-                pos[num].first = y;
-                pos[num].second = x;
-                num++;
-            }
+            cin >> mp[i][j];
         }
     }
 
-    go(0);
+    for(int i = 0; i < T; i++)
+    {
+        int x, d, k;
+
+        cin >> x >> d >> k;
+
+        for(int l = x; l <= N; l += x)
+        {
+            if(d == 0)
+            {
+                memcpy(temp, mp, sizeof(mp));
+
+                for(int n = 0; n < M; n++)
+                    temp[l][(n + k) % M] = mp[l][n];
+
+                memcpy(mp, temp, sizeof(temp));
+            }
+            else if(d == 1)
+            {
+                memcpy(temp, mp, sizeof(mp));
+
+                for(int n = 0; n < M; n++)
+                    temp[l][(n + (M - k)) % M] = mp[l][n];
+
+                memcpy(mp, temp, sizeof(temp));
+            }
+        }
+
+        bool bCheck = false;
+
+        memcpy(temp, mp, sizeof(mp));
+
+        for(int y = 1; y <= N; y++)
+        {
+            for(int x = 0; x < M; x++)
+            {
+                for(int i = 0; i < 4; i++)
+                {
+                    int ny = y + dy[i];
+                    int nx = x + dx[i];
+
+                    if(ny == -1 || ny == N + 1)
+                        continue;
+
+                    if(nx == -1)
+                        nx = M - 1;
+                    else if(nx == M)
+                        nx = 0;
+
+                    if(mp[y][x] == mp[ny][nx])
+                    {
+                        if(mp[y][x] == 0)
+                            continue;
+
+                        temp[y][x] = temp[ny][nx] = 0;
+                        bCheck = true;
+                    }
+                }
+            }
+        }
+
+        memcpy(mp, temp, sizeof(temp));
+
+        if(bCheck == false)
+        {
+            double sum = 0;
+            double cnt = 0;
+
+            for(int y = 1; y <= N; y++)
+            {
+                for(int x = 0; x < M; x++)
+                {
+                    if(mp[y][x] == 0)
+                        continue;
+                    
+                    sum+=mp[y][x];
+                    cnt++;
+                }
+            }
+
+            double avg = sum /cnt;
+
+            for(int y = 1; y <= N; y++)
+            {
+                for(int x = 0; x < M; x++)
+                {
+                    if(mp[y][x] == 0)
+                        continue;
+                    
+                    if((double)mp[y][x] < avg)
+                        mp[y][x]++;
+                    else if((double)mp[y][x] > avg)
+                        mp[y][x]--;
+                }
+            }
+        }
+
+    }
+
+    int ret = 0;
+
+    for(int y = 1; y <= N; y++)
+    {
+        for(int x = 0; x < M; x++)
+        {
+            if(mp[y][x] == 0)
+                continue;
+            
+            ret+=mp[y][x];
+        }
+    }
 
     cout << ret;
 }
