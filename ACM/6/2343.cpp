@@ -3,27 +3,26 @@
 
 using namespace std;
 
-int N, M;
-
 int mp[100001];
-int sum1[100001];
+int ti[100001];
+int N,M;
 
-int check(int W)
+int check(int t)
 {
-    int cnt = 0;
+    int idx = 0;
 
     for(int i = 0; i < N; i++)
     {
-        if(cnt >= M)
-            return 0;
-
-        if(sum1[cnt] + mp[i] > W)
+        if(ti[idx] + mp[i] > t)
         {
-            cnt++;
+            idx++;
             i--;
         }
         else
-            sum1[cnt]+=mp[i];
+            ti[idx] += mp[i];
+
+        if(idx >= M)
+            return 0;
     }
 
     return 1;
@@ -31,6 +30,8 @@ int check(int W)
 
 int main()
 {
+    fastio;
+
     cin >> N >> M;
 
     int sum = 0;
@@ -38,26 +39,30 @@ int main()
     for(int i = 0; i < N; i++)
     {
         cin >> mp[i];
-        sum += mp[i];
+
+        sum+=mp[i];
     }
 
     int l = 0;
     int r = sum;
-    int ret = 2000000000;
+
+    int ret = 987654321;
 
     while(l <= r)
     {
         int mid = (l+r) / 2;
 
-        memset(sum1, 0, sizeof(sum1));
+        memset(ti, 0, sizeof(ti));
+
         if(check(mid))
         {
             ret = min(ret, mid);
+
             r = mid - 1;
         }
         else
             l = mid + 1;
-    }    
+    }
 
     cout << ret;
 }
