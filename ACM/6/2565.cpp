@@ -3,46 +3,56 @@
 
 using namespace std;
 
-int N;
-vector<pair<int, int>> v;
-int mp[101];
-int lis[101];
-
-bool cmp(pair<int,int>& a, pair<int, int> & b)
-{
-    if(a.second == b.second)
-        return a.first < b.first;
-    else
-        return a.second < b.second;
-}
-
 int main()
 {
-    cin >> N;
+    int A, B;
+    
+    cin >> A >> B;
 
-    for(int i = 0; i < N; i++)
+    vector<string> vA,vB;
+
+    for(int i = 0; i < A; i++)
     {
-        int a,b;
+        string s;
 
-        cin >> a >> b;
+        cin >> s;
 
-        v.push_back(pair<int,int>(a,b));
+        vA.push_back(s);
     }
 
-    sort(v.begin(),v.end(),cmp);
-    
-    for(int i = 0; i < N; i++)
-        mp[i] = v[i].first;
-
-    int len = 0;
-
-    for(int i = 0; i < N; i++)
+    for(int i = 0; i < B; i++)
     {
-        auto t = upper_bound(lis, lis + len, mp[i]);
+        string s;
 
-        if(*t == 0) len++;
-        *t = mp[i];
+        cin >> s;
+
+        vB.push_back(s);
     }
-    
-    cout << N - len;
+
+    sort(vA.begin(),vA.end());
+    sort(vB.begin(),vB.end());
+
+    int ret = 0;
+
+    while(vB.size())
+    {
+        if(vB.back() == vA.back())
+        {
+            ret++;
+            string s = vB.back();
+            vB.pop_back();
+
+            while(vB.size() && vB.back() == s)
+            {
+                ret++;
+                vB.pop_back();
+            }
+
+            vA.pop_back();
+        }
+        else
+            vB.pop_back();
+    }
+
+    cout << ret;
 }
